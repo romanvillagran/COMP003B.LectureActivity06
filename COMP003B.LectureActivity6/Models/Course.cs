@@ -2,16 +2,12 @@
 
 namespace COMP003B.LectureActivity6.Models
 {
-    public class Student
+    public class Course
     {
-        [Required]
-        public int StudentId { get; set; }
+        public int CourseId { get; set; }
 
         [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string Email { get; set; }
+        public string Title { get; set; }
 
         public virtual ICollection<Enrollment>? Enrollments { get; set; }
     }
