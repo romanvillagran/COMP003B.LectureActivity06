@@ -22,7 +22,7 @@ namespace COMP003B.LectureActivity6.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.students.ToListAsync());
+            return View(await _context.Students.ToListAsync());
         }
 
         // GET: Students/Details/5
@@ -33,12 +33,18 @@ namespace COMP003B.LectureActivity6.Controllers
                 return NotFound();
             }
 
-            var student = await _context.students
+            var student = await _context.Students
                 .FirstOrDefaultAsync(m => m.StudentId == id);
             if (student == null)
             {
                 return NotFound();
             }
+
+            ViewBag.Courses = from s in _context.Students
+                              join e in _context.Enrollment on s.StudentId equals e.StudentId
+                              join c in _context.Courses on e.CourseId equals c.CourseId
+                              where s.StudentId == id
+                              select c;
 
             return View(student);
         }
@@ -73,7 +79,7 @@ namespace COMP003B.LectureActivity6.Controllers
                 return NotFound();
             }
 
-            var student = await _context.students.FindAsync(id);
+            var student = await _context.Students.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -124,7 +130,7 @@ namespace COMP003B.LectureActivity6.Controllers
                 return NotFound();
             }
 
-            var student = await _context.students
+            var student = await _context.Students
                 .FirstOrDefaultAsync(m => m.StudentId == id);
             if (student == null)
             {
@@ -139,10 +145,10 @@ namespace COMP003B.LectureActivity6.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.students.FindAsync(id);
+            var student = await _context.Students.FindAsync(id);
             if (student != null)
             {
-                _context.students.Remove(student);
+                _context.Students.Remove(student);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +157,7 @@ namespace COMP003B.LectureActivity6.Controllers
 
         private bool StudentExists(int id)
         {
-            return _context.students.Any(e => e.StudentId == id);
+            return _context.Students.Any(e => e.StudentId == id);
         }
     }
 }

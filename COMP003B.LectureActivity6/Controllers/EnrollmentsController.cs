@@ -22,7 +22,7 @@ namespace COMP003B.LectureActivity6.Controllers
         // GET: Enrollments
         public async Task<IActionResult> Index()
         {
-            var webDevAcademyContext = _context.Enrollments.Include(e => e.Course);
+            var webDevAcademyContext = _context.Enrollment.Include(e => e.Course);
             return View(await webDevAcademyContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace COMP003B.LectureActivity6.Controllers
                 return NotFound();
             }
 
-            var enrollment = await _context.Enrollments
+            var enrollment = await _context.Enrollment
                 .Include(e => e.Course)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (enrollment == null)
@@ -48,7 +48,7 @@ namespace COMP003B.LectureActivity6.Controllers
         // GET: Enrollments/Create
         public IActionResult Create()
         {
-            ViewData["CourseId"] = new SelectList(_context.courses, "CourseId", "Title");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "Title");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace COMP003B.LectureActivity6.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.courses, "CourseId", "Title", enrollment.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "Title", enrollment.CourseId);
             return View(enrollment);
         }
 
@@ -77,12 +77,12 @@ namespace COMP003B.LectureActivity6.Controllers
                 return NotFound();
             }
 
-            var enrollment = await _context.Enrollments.FindAsync(id);
+            var enrollment = await _context.Enrollment.FindAsync(id);
             if (enrollment == null)
             {
                 return NotFound();
             }
-            ViewData["CourseId"] = new SelectList(_context.courses, "CourseId", "Title", enrollment.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "Title", enrollment.CourseId);
             return View(enrollment);
         }
 
@@ -118,7 +118,7 @@ namespace COMP003B.LectureActivity6.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.courses, "CourseId", "Title", enrollment.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "Title", enrollment.CourseId);
             return View(enrollment);
         }
 
@@ -130,7 +130,7 @@ namespace COMP003B.LectureActivity6.Controllers
                 return NotFound();
             }
 
-            var enrollment = await _context.Enrollments
+            var enrollment = await _context.Enrollment
                 .Include(e => e.Course)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (enrollment == null)
@@ -146,10 +146,10 @@ namespace COMP003B.LectureActivity6.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enrollment = await _context.Enrollments.FindAsync(id);
+            var enrollment = await _context.Enrollment.FindAsync(id);
             if (enrollment != null)
             {
-                _context.Enrollments.Remove(enrollment);
+                _context.Enrollment.Remove(enrollment);
             }
 
             await _context.SaveChangesAsync();
@@ -158,7 +158,7 @@ namespace COMP003B.LectureActivity6.Controllers
 
         private bool EnrollmentExists(int id)
         {
-            return _context.Enrollments.Any(e => e.Id == id);
+            return _context.Enrollment.Any(e => e.Id == id);
         }
     }
 }

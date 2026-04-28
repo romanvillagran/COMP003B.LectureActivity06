@@ -8,10 +8,10 @@ namespace COMP003B.LectureActivity6.Data
         public WebDevAcademyContext(DbContextOptions<WebDevAcademyContext> options) : base(options) { 
         }
 
-        public DbSet<Student> students { get; set; }
+        public DbSet<Student> Students { get; set; }
 
-        public DbSet<Course> courses { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
-        public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Enrollment> Enrollment { get; set; }
     }
 }

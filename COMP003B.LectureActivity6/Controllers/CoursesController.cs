@@ -22,7 +22,7 @@ namespace COMP003B.LectureActivity6.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.courses.ToListAsync());
+            return View(await _context.Courses.ToListAsync());
         }
 
         // GET: Courses/Details/5
@@ -33,7 +33,7 @@ namespace COMP003B.LectureActivity6.Controllers
                 return NotFound();
             }
 
-            var course = await _context.courses
+            var course = await _context.Courses
                 .FirstOrDefaultAsync(m => m.CourseId == id);
             if (course == null)
             {
@@ -73,7 +73,7 @@ namespace COMP003B.LectureActivity6.Controllers
                 return NotFound();
             }
 
-            var course = await _context.courses.FindAsync(id);
+            var course = await _context.Courses.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace COMP003B.LectureActivity6.Controllers
                 return NotFound();
             }
 
-            var course = await _context.courses
+            var course = await _context.Courses
                 .FirstOrDefaultAsync(m => m.CourseId == id);
             if (course == null)
             {
@@ -139,10 +139,10 @@ namespace COMP003B.LectureActivity6.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var course = await _context.courses.FindAsync(id);
+            var course = await _context.Courses.FindAsync(id);
             if (course != null)
             {
-                _context.courses.Remove(course);
+                _context.Courses.Remove(course);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace COMP003B.LectureActivity6.Controllers
 
         private bool CourseExists(int id)
         {
-            return _context.courses.Any(e => e.CourseId == id);
+            return _context.Courses.Any(e => e.CourseId == id);
         }
     }
 }
